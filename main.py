@@ -6,7 +6,6 @@ from pydantic import BaseModel
 import json
 import logging
 import uvicorn
-import user as u
 from pathApp.User import app as userApp
 from pathApp.User import creditpath as creditpath
 from pathApp.GoogleMap import googlemap

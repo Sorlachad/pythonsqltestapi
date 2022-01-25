@@ -1,9 +1,7 @@
 
-import pyodbc
 import json as j
 import stripe
 
-print(pyodbc.drivers())
 
 
 def onInsertJson(sqlDbconn,json):
