@@ -11,9 +11,6 @@ from pathApp.User import app as userApp
 from pathApp.User import creditpath as creditpath
 from pathApp.GoogleMap import googlemap
 
-if(__name__=="__main__"):
-    uvicorn.run("main:app", host="192.168.1.20", port=8000, reload=True,
-    log_level="debug", debug=True,proxy_headers=True,forwarded_allow_ips="*")
 
 
 app = FastAPI()

@@ -1,7 +1,15 @@
 import websockets
 import asyncio
 import omise
-omise.api_secret = 'skey_test_5ql7g9afar2i5l7svzw'
+import os
+from dotenv import load_dotenv
+
+load_dotenv('D:\\pythonsql.env')
+
+
+key=os.environ.get('API_KEY_OMISE')
+print(key)
+omise.api_secret = key
 
 
 oc=omise.Charge.retrieve()

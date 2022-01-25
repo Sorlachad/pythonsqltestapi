@@ -1,8 +1,10 @@
+import os
+from dotenv import load_dotenv
 import stripe
-
+load_dotenv()
 class CreditCard:
     async def crateCreditCard():
-        stripe.api_key = "pk_test_51KJcErLcQbzaMHi3KJOMM6o37BnzcwfugGiug7CMwArPnZAj3sDjgC8hem7zK3QftcL5PrEWdGm4o4a8x1bRwjgA000KtljPp4"
+        stripe.api_key = os.environ['STRIPE_PUBLIC']
 
         response=stripe.Token.create(
         card={
@@ -17,7 +19,7 @@ class CreditCard:
 
     async def paymentCard():
         token=await CreditCard.crateCreditCard()
-        stripe.api_key='sk_test_51KJcErLcQbzaMHi3J36s4Udx2Be02PibkG1tPricmqRJ5pOzQemeQeJEXPNymvL8LBV1RBFtYReW0D6JfYi4FnCx00InWkfX5N'
+        stripe.api_key=os.environ['STRIPE_SECRET']
         payment = stripe.Charge.create(
                     amount= int(100)*100,                  # convert amount to cents
                     currency='usd',

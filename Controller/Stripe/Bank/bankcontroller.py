@@ -3,7 +3,7 @@ import stripe
 class bankController:
 
     async def createBankToken():
-            stripe.api_key = "pk_test_51KJcErLcQbzaMHi3KJOMM6o37BnzcwfugGiug7CMwArPnZAj3sDjgC8hem7zK3QftcL5PrEWdGm4o4a8x1bRwjgA000KtljPp4"
+            stripe.api_key = ""
 
             response=stripe.Token.create(
             bank_account={
