@@ -9,7 +9,7 @@ colorama==0.4.4
 dnspython==2.2.0
 email-validator==1.1.3
 fastapi==0.72.0
-unixodbc
+unixodbc==2.3.9
 unixodbc-dev
 python-pyodbc
 libsqliteodbc
