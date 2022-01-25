@@ -1,3 +1,4 @@
+heroku buildpacks:add --index 1 https://github.com/heroku/heroku-buildpack-apt
 anyio==3.5.0
 asgiref==3.4.1
 astroid==2.9.3
@@ -26,9 +27,7 @@ platformdirs==2.4.1
 pycodestyle==2.8.0
 pydantic==1.9.0
 pylint==2.12.2
-https://github.com/heroku/heroku-buildpack-apt.git
-https://github.com/heroku/heroku-buildpack-python.git
-https://github.com/matt-bertoncello/python-pyodbc-buildpack.git
+python-dotenv==0.19.2
 python-multipart==0.0.5
 PyYAML==5.4.1
 requests==2.27.1
