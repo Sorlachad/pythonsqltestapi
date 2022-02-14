@@ -2,7 +2,6 @@ import imp
 from re import I
 
 
-import pyodbc
 import json as j
 import itertools
 import ast

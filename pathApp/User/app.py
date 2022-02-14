@@ -1,6 +1,5 @@
 from asyncio.windows_events import NULL
 from re import I
-import pyodbc
 import main as m
 from database import connect as con
 from database.UserDatabase import userquery as uq
@@ -9,7 +8,7 @@ import Model.UserModel.usermodel as umodel
 from Model.UserModel import usermodel,creditcardmodel as um
 import logging
 import Logsetting as Log
-
+import psycopg2
 
 
 
@@ -45,7 +44,7 @@ class UserRouter:
             text=f' IP: {request.client.host}:{request.client.port} Method:adduser status:{status.HTTP_200_OK}'
             Log.writeLog(__name__,logging.DEBUG,'UserRouter',text)
             print(jsonout)
-        except pyodbc.DatabaseError as ex:
+        except psycopg2.DatabaseError as ex:
             print(ex)
             text=f' IP: {request.client.host}:{request.client.port} Method:adduser status:{status.HTTP_404_NOT_FOUND} error:{ex}'
             Log.writeLog(__name__,logging.DEBUG,'UserRouter',text)
@@ -57,7 +56,7 @@ class UserRouter:
         try:
             jout = uq.queryUser.onGetUser(con.sqlDbconn)
             text=f' IP: {request.client.host}:{request.client.port} Method:authen status:{status.HTTP_200_OK}'
-        except pyodbc.DatabaseError as ex:
+        except psycopg2.DatabaseError as ex:
             print(ex)
             text=f' IP: {request.client.host}:{request.client.port} Method:authen status:{status.HTTP_404_NOT_FOUND} error:{ex}'
             Log.writeLog(__name__,logging.DEBUG,'UserRouter',text)

@@ -1,6 +1,5 @@
 from asyncio.windows_events import NULL
 from re import I
-import pyodbc
 import main as m
 from database import connect as con
 from database.imageDatabase import image as uq
@@ -9,7 +8,7 @@ import Model.UserModel.usermodel as umodel
 from Model.imageModel import freeTypeImageModel as imagemodel
 import logging
 import Logsetting as Log
-
+import psycopg2
 
 
 class ImageRouter:
@@ -26,7 +25,7 @@ class ImageRouter:
             jout = uq.imageQuery.onGetImageProductType(con.sqlDbconn_product)
             text=f' IP: {request.client.host}:{request.client.port} Method:getfreetypeimage status:{status.HTTP_200_OK}'
             Log.writeLog(__name__,logging.DEBUG,'ImageRouter',text)
-        except pyodbc.DatabaseError as ex:
+        except psycopg2.DatabaseError as ex:
             text=f' IP: {request.client.host}:{request.client.port} Method:getfreetypeimage status:{status.HTTP_404_NOT_FOUND} error:{ex}'
             Log.writeLog(__name__,logging.DEBUG,'ImageRouter',text)
             return {"status":status.HTTP_404_NOT_FOUND,"data":str(ex).split('.')[3]}
@@ -38,7 +37,7 @@ class ImageRouter:
             jout = uq.imageQuery.onGetProduct(con.sqlDbconn_product)
             text=f' IP: {request.client.host}:{request.client.port} Method:getproduct status:{status.HTTP_200_OK}'
             Log.writeLog(__name__,logging.DEBUG,'ImageRouter',text)
-        except pyodbc.DatabaseError as ex:
+        except psycopg2.DatabaseError as ex:
             text=f' IP: {request.client.host}:{request.client.port} Method:getproduct status:{status.HTTP_404_NOT_FOUND} error:{ex}'
             Log.writeLog(__name__,logging.DEBUG,'ImageRouter',text)
             return {"status":status.HTTP_404_NOT_FOUND,"data":str(ex).split('.')[3]}
@@ -50,7 +49,7 @@ class ImageRouter:
             jout = uq.imageQuery.onInsertFreeTypeImage(con.sqlDbconn_product,payload)
             text=f' IP: {request.client.host}:{request.client.port} Method:sendimagefreetype status:{status.HTTP_200_OK}'
             Log.writeLog(__name__,logging.DEBUG,'ImageRouter',text)
-        except pyodbc.DatabaseError as ex:
+        except psycopg2.DatabaseError as ex:
             print(ex)
             text=f' IP: {request.client.host}:{request.client.port} Method:sendimagefreetype status:{status.HTTP_404_NOT_FOUND} error:{ex}'
             Log.writeLog(__name__,logging.DEBUG,'ImageRouter',text)

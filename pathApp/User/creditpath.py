@@ -1,13 +1,12 @@
 import imp
 from re import I
-import pyodbc
 import main as m
 from database import connect as con
 from database.UserDatabase import userquery as uq
 from fastapi import APIRouter, Body, Depends, HTTPException,status
 import Model.UserModel.usermodel as umodel
 from Model.UserModel import usermodel,creditcardmodel as um
-
+import psycopg2
 
 class Credit:
     router = APIRouter(
@@ -32,7 +31,7 @@ class Credit:
     async def getcreditcard(payload: dict = Body(...)):
             try:
                 json=uq.queryUser.onGetCreditcard(con.sqlDbconn,payload['iduser']) 
-            except pyodbc.Error as ex:
+            except psycopg2.Error as ex:
                 return {"status":status.HTTP_404_NOT_FOUND,"error":ex}
             return {
                 "status":status.HTTP_200_OK,
