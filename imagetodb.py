@@ -1,11 +1,9 @@
 import base64
 import os
 import json
-from isort import file
 
 from database import connect as db
 from os import listdir
-from skimage import img_as_ubyte
 from os.path import isfile, join
 onlyfiles = [f for f in listdir('D://เสื้อผ้า//เสื้อ') if isfile(join('D://เสื้อผ้า//เสื้อ', f))]
 onlyfiles2 = [f for f in listdir('D://เสื้อผ้า//เสื้อ//imageproducttype') if isfile(join('D://เสื้อผ้า//เสื้อ//imageproducttype', f))]
