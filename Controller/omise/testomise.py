@@ -1,17 +1,17 @@
-import websockets
-import asyncio
-import omise
-import os
-from dotenv import load_dotenv
+# import websockets
+# import asyncio
+# import omise
+# import os
+# from dotenv import load_dotenv
 
-load_dotenv('D:\\pythonsql.env')
-
-
-key=os.environ.get('API_KEY_OMISE')
-print(key)
-omise.api_secret = key
+# load_dotenv('D:\\pythonsql.env')
 
 
-oc=omise.Charge.retrieve()
+# key=os.environ.get('API_KEY_OMISE')
+# print(key)
+# omise.api_secret = key
 
-print(oc)
+
+# oc=omise.Charge.retrieve()
+
+# print(oc)
