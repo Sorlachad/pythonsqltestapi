@@ -8,10 +8,10 @@ import json as j
 
 class queryUser:
 
-    def onGetUser(sqlDbconn) :
+    def onGetImageFreeType(sqlDbconn) :
         print("Read")
         cursor = sqlDbconn.cursor()
-        cursor.execute('SELECT * FROM tb_user3 for json auto')
+        cursor.execute('SELECT * FROM tb_user for json auto')
         for row in cursor:
             print('10')
             print(f'{row}')
@@ -31,7 +31,7 @@ class queryUser:
         # cursor.execute('''
         #     insert into [dbo].[User] ([username],[password]) values (?)
         #  ''',(jsonString))
-        cursor.execute('''INSERT INTO tb_user3
+        cursor.execute('''INSERT INTO tb_user
         select username,password
         from openjson(?)
         with (
@@ -59,13 +59,29 @@ class queryUser:
         sqlDbconn.commit()
     #TODO:DELETE
 
-    def onDelete(sqlDbconn):
+    def onDelete(sqlDbconn,payload):
         print('delete')
         cursor = sqlDbconn.cursor()
         cursor.execute('''
-            delete from [dbo].[User] where id= ? 
-        ''',(7))
+            delete from tb_user where username= ? 
+        ''',(payload['username']))
         sqlDbconn.commit()
+
+    def onAuthen(sqlDbconn,payload):
+        print('delete')
+        cursor = sqlDbconn.cursor()
+        cursor.execute('''
+            select id,username,password from tb_user where username= ? and password= ? for json auto
+        ''',(payload['username'],payload['password']))
+        for row in cursor:
+            print(f'{row}')
+            jout=(j.dumps(row[0]))
+            jout=j.loads(jout)
+            print(jout)        
+            #jout=row
+            return jout
+        sqlDbconn.commit()
+
         #TODO:insertCreditcard   
         #  
     #TODO:insertcard

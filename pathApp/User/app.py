@@ -1,4 +1,4 @@
-from pydoc import text
+from asyncio.windows_events import NULL
 from re import I
 import pyodbc
 import main as m
@@ -28,10 +28,17 @@ class UserRouter:
         text=f' IP: {request.client.host}:{request.client.port} Method:getuser status:{status.HTTP_200_OK}'
         Log.writeLog(__name__,logging.INFO,'UserRouter',text)
         return {'data': jout}
+    
+    @router.post('/delete')
+    def onDelete(request:Request,payload:dict=Body(...)):
+        jout = uq.queryUser.onDelete(con.sqlDbconn,payload)
+        text=f' IP: {request.client.host}:{request.client.port} Method:delete status:{status.HTTP_200_OK}'
+        Log.writeLog(__name__,logging.INFO,'UserRouter',text)
+        return {'data': jout}
 
 
     @router.post("/adduser")
-    async def getusers(request:Request,response:umodel.UserModel):
+    async def adduser(request:Request,response:umodel.UserModel):
         try:
             print(response)
             jsonout = uq.queryUser.onInsertJson(con.sqlDbconn,response)
@@ -42,8 +49,20 @@ class UserRouter:
             print(ex)
             text=f' IP: {request.client.host}:{request.client.port} Method:adduser status:{status.HTTP_404_NOT_FOUND} error:{ex}'
             Log.writeLog(__name__,logging.DEBUG,'UserRouter',text)
-            return {"status":status.HTTP_404_NOT_FOUND,"error":str(ex).split('.')[3]}
-        return {'status':status.HTTP_200_OK}
+            return {"status":status.HTTP_404_NOT_FOUND,"data":str(ex).split('.')[3]}
+        return {'status':status.HTTP_200_OK,"data":None}
+    
+    @router.post('/authen')
+    def getusers(request:Request,payload:dict=Body(...)):
+        try:
+            jout = uq.queryUser.onGetUser(con.sqlDbconn)
+            text=f' IP: {request.client.host}:{request.client.port} Method:authen status:{status.HTTP_200_OK}'
+        except pyodbc.DatabaseError as ex:
+            print(ex)
+            text=f' IP: {request.client.host}:{request.client.port} Method:authen status:{status.HTTP_404_NOT_FOUND} error:{ex}'
+            Log.writeLog(__name__,logging.DEBUG,'UserRouter',text)
+            return {"status":status.HTTP_404_NOT_FOUND,"data":str(ex).split('.')[3]}
+        return {"status":status.HTTP_200_OK,'data': jout}
     
     
     @router.websocket("/ws/time/websocket")

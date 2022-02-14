@@ -1,1 +1,1 @@
-web: gunicorn main.wsgi
+web: gunicorn -k uvicorn.workers.UvicornWorker --log-level debug main:app

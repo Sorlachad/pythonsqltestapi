@@ -1,3 +1,4 @@
+from email.mime import image
 from optparse import Option
 from typing import Optional
 from fastapi import FastAPI, Form, requests,status,HTTPException,Request
@@ -9,14 +10,16 @@ import uvicorn
 from pathApp.User import app as userApp
 from pathApp.User import creditpath as creditpath
 from pathApp.GoogleMap import googlemap
+from pathApp.image import pathimage
 
-
+#uvicorn main:app --host 0.0.0.0 --reload --proxy-headers --forwarded-allow-ips="*"
 
 app = FastAPI()
 
 app.include_router(userApp.UserRouter.router)
 app.include_router(creditpath.Credit.router)
 app.include_router(googlemap.router)
+app.include_router(pathimage.ImageRouter.router)
 
 @app.get("/")
 def root():
